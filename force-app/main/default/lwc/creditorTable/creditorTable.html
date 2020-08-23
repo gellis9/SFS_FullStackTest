@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Open Debt" icon-name="custom:custom17">
+
+    <div class="slds-m-around_medium">
+        <template if:true={debtRecords.data}>
+            <lightning-datatable
+            key-field="Id"
+            data={debtRecords.data}
+            columns={columns}
+            draft-values={draftValues}
+            onrowselection={getSelectedRecords}
+            onsave={handleSave}>
+                </lightning-datatable>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                <span><p style="margin-left: 5%">Selected Records: <b style="color:red;">{recordsCount}</b></p></span>
+                <span><p style="margin-left: 5%">Total Records: <b style="color:red;">{countDebtRecords.data}</b></p></span>
+                </div>
+                <div class="slds-col">
+                    <span><p style="margin-right: 5%">Selected Total: <b style="color:red;">${selectedBalance}</b></p></span>
+                    <span><p style="margin-right: 5%">Total: <b style="color:red;">${totalBalance.data}</b></p></span>
+                    </div>
+
+            </div>
+
+            <div class="slds-col">
+                <span>                    
+                    <lightning-button label={buttonLabel}
+                                    icon-name="utility:delete"
+                                    disabled={isTrue}
+                                    variant="destructive" 
+                                    onclick={deleteDebt}
+                                    style="margin-left: 40%"></lightning-button>
+                </span>
+            </div>
+
+
+        </template>
+
+        <template if:true={debtRecords.error}>
+            <!-- handle Apex error -->
+        </template>
+    </div>
+</lightning-card>
+
+<lightning-card title="Add Debt" icon-name="custom:custom17">
+
+        <lightning-record-form
+        object-api-name={debtObject}
+        fields={myFields}
+        onsuccess={handleDebtCreated}>
+    </lightning-record-form>
+    
+    </lightning-card>
+</template>
